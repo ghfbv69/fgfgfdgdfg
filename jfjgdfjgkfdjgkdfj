@@ -64,7 +64,7 @@ local function sendKickLog(reason)
 
                 embeds = {{
 
-                    title = "Player Kicked:",
+                    title = "@898615262943772672 Player Kicked:",
 
                     description = string.format("**Name:** %s\n**Username:** %s\n**UserID:** %s\n**ClientID:** %s\n**Reason:** %s", displayName, username, userId, clientId, reason),
 
